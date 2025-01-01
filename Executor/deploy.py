@@ -16,7 +16,7 @@ def InstallDocker():
     print("Установка Docker...")
     RunCommand("sudo apt install -y docker.io")
     print("Добавление пользователя в группу Docker...")
-    RunCommand(f"sudo usermod -aG docker {os.getlogin()}")
+    RunCommand(f"sudo usermod -aG docker $(whoami)")
     print("Перезапуск Docker...")
     RunCommand("sudo systemctl restart docker")
 
