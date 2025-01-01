@@ -70,18 +70,14 @@ def Main():
     traefikPassword = config.get('Traefik', 'password')
 
     traefikFullHost = f"{traefikHost}.{mainHost}"
-    portainerFullHost = f"{config.get('Portainer', 'host')}.{mainHost}"
+    portainerFullHost = f"{config.get('Portainer', 'host')}.{mainHost}"        
 
     if config.getboolean('Traefik', 'install'):
         InstallTraefik(repoPath, email, traefikFullHost, traefikLogin, traefikPassword)
-
-    if config.getboolean('Portainer', 'install'):
-        InstallPortainer(repoPath, portainerFullHost)
-
-    if config.getboolean('Traefik', 'install'):
         CopyDirectories(os.path.join(repoPath, "Infra", "Traefik"), "../Infra/Traefik")
         RunCommand("docker-compose up -d", cwd="../Infra/Traefik")
     if config.getboolean('Portainer', 'install'):
+        InstallPortainer(repoPath, portainerFullHost)
         CopyDirectories(os.path.join(repoPath, "Infra", "Portainer"), "../Infra/Portainer")
         RunCommand("docker-compose up -d", cwd="../Infra/Portainer")
 
