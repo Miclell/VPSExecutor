@@ -10,6 +10,8 @@ def RunCommand(command, cwd=None):
     if result.stderr:
         print(result.stderr.decode())
 
+    return command
+
 def InstallDocker():
     print("Обновление пакетов...")
     RunCommand("sudo apt update")
@@ -21,8 +23,11 @@ def InstallDocker():
     RunCommand("sudo systemctl restart docker")
 
 def CreateHashedPassword(username, password):
+    command = "apt-get install -y apache2-utils"
+    RunCommand(command)
+
     command = f"htpasswd -nb {username} {password}"
-    result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = RunCommand(command)
 
     hashedPassword = result.stdout.decode().strip()
     hashedPassword = hashedPassword.replace('$', '$$')
@@ -52,7 +57,7 @@ def CopyDirectories(src, dst):
     shutil.copytree(src, dst)
 
 def Main():
-    repoPath = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+    repoPath = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 
     configPath = os.path.join(repoPath, 'config.ini')
     config = configparser.ConfigParser()
