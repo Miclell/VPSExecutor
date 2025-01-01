@@ -10,8 +10,6 @@ def RunCommand(command, cwd=None):
     if result.stderr:
         print(result.stderr.decode())
 
-    return command
-
 def InstallDocker():
     print("Обновление пакетов...")
     RunCommand("sudo apt update")
@@ -27,7 +25,7 @@ def CreateHashedPassword(username, password):
     RunCommand(command)
 
     command = f"htpasswd -nb {username} {password}"
-    result = RunCommand(command)
+    result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     hashedPassword = result.stdout.decode().strip()
     hashedPassword = hashedPassword.replace('$', '$$')
@@ -84,7 +82,7 @@ def Main():
         CopyDirectories(os.path.join(repoPath, "Infra"), "../Infra")
         RunCommand("docker-compose up -d", cwd="../Infra/Traefik")
     if config.getboolean('Portainer', 'install'):
-        CopyDirectories(os.path.join(repoPath, "Utils"), "../Utils")
+        CopyDirectories(os.path.join(repoPath, "Infra"), "../Infra")
         RunCommand("docker-compose up -d", cwd="../Infra/Portainer")
 
     installMainerChoice = input("Установить Mainer? (y/n): ").lower()
