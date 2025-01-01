@@ -52,7 +52,7 @@ def CopyDirectories(src, dst):
     shutil.copytree(src, dst)
 
 def Main():
-    repoPath = os.path.abspath("VPSExecutor")
+    repoPath = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 
     configPath = os.path.join(repoPath, 'config.ini')
     config = configparser.ConfigParser()
