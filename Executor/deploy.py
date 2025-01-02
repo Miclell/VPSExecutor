@@ -47,7 +47,7 @@ def InstallTraefik(repoPath, email, host, username, password):
 def InstallPortainer(repoPath, host):
     print("Установка Portainer...")
     portainerDir = os.path.join(repoPath, "Infra", "Portainer")
-
+    RunCommand("docker volume create --name=portainer_data")
     with open(os.path.join(portainerDir, ".env"), "w") as f:
         f.write(f"HOST={host}\n")
 
