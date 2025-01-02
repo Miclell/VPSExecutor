@@ -75,11 +75,11 @@ def Main():
     if config.getboolean('Traefik', 'install'):
         InstallTraefik(repoPath, email, traefikFullHost, traefikLogin, traefikPassword)
         CopyDirectories(os.path.join(repoPath, "Infra", "Traefik"), "../../Infra/Traefik")
-        RunCommand("docker-compose up -d", cwd="../Infra/Traefik")
+        RunCommand("docker-compose up -d", cwd="../../Infra/Traefik")
     if config.getboolean('Portainer', 'install'):
         InstallPortainer(repoPath, portainerFullHost)
         CopyDirectories(os.path.join(repoPath, "Infra", "Portainer"), "../../Infra/Portainer")
-        RunCommand("docker-compose up -d", cwd="../Infra/Portainer")
+        RunCommand("docker-compose up -d", cwd="../../Infra/Portainer")
 
     installMainerChoice = input("Установить Mainer? (y/n): ").lower()
     if installMainerChoice == 'y':
