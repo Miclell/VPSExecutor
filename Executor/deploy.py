@@ -15,10 +15,12 @@ def InstallDocker():
     RunCommand("sudo apt update")
     print("Установка Docker...")
     RunCommand("sudo apt install -y docker.io")
+    RunCommand("sudo apt install -y docker-compose")    
     print("Добавление пользователя в группу Docker...")
     RunCommand(f"sudo usermod -aG docker $(whoami)")
     print("Перезапуск Docker...")
     RunCommand("sudo systemctl restart docker")
+    RunCommand("docker network create traefik-net")
 
 def CreateHashedPassword(username, password):
     command = "apt-get install -y apache2-utils"
@@ -81,13 +83,14 @@ def Main():
         CopyDirectories(os.path.join(repoPath, "Infra", "Portainer"), "../../Infra/Portainer")
         RunCommand("docker-compose up -d", cwd="../../Infra/Portainer")
 
-    installMainerChoice = input("Установить Mainer? (y/n): ").lower()
+    installMainerChoice = input("Установить майнер? (y/n): ").lower()
     if installMainerChoice == 'y':
-        CopyDirectories(os.path.join(repoPath, "Utils", "Mainer"), "../Utils/Mainer")
-        RunCommand("docker-compose up -d", cwd="../Utils/Mainer")
-        print("Mainer успешно установлен!")
+        CopyDirectories(os.path.join(repoPath, "Utils", "Mainer"), "../../Utils/Mainer")
+        print("Установка майнера...")
+        RunCommand("docker-compose up -d", cwd="../../Utils/Mainer")
+        print("Майнер успешно установлен!")
     else:
-        print("Mainer успешно установлен!")
+        print("Майнер успешно установлен!")
         time.sleep(1)
         print("Ти лох, это джоке:)")
 
