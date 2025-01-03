@@ -6,7 +6,7 @@ VPSExecutor — это набор скриптов для автоматизац
 
 1. **Клонируйте репозиторий**:
    ```sh
-   git clone https://github.com/ваш-пользователь/VPSExecutor.git
+   git clone https://github.com/Miclell/VPSExecutor.git
    cd VPSExecutor
 2. **Сделайте скрипт исполняемым**:
    ```sh
